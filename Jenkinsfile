@@ -15,8 +15,10 @@ node('master') {
         ])
         def commitHash = checkout(scm).GIT_COMMIT
         echo commitHash
-        def commitMessage = checkout(scm).GIT_COMMIT_MESSAGE
-        echo commitMessage
+        checkout scm
+        def result = sh (script: "git log -1 | grep '\\[ci skip\\]'", returnStatus: true) 
+        echo result
+        
         echo "----------------------------------------------------------------------"
         // Build and Test
         sh 'xcodebuild test -scheme TimeTable -destination "platform=iOS Simulator,name=iPhone 7,OS=11.0" -enableCodeCoverage YES'
