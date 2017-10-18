@@ -13,11 +13,9 @@ node('master') {
                 url: 'https://github.com/mmorejon/time-table.git'
             ]]
         ])
-        def commitHash = checkout(scm).GIT_COMMIT
-        echo commitHash
-        checkout scm
-        def result = commitMessage()
-        echo ""+result
+        //def commitHash = checkout(scm).GIT_COMMIT
+        def commitMessage = sh 'git log -1 --pretty=%B'
+        echo commitMessage
         
         echo "----------------------------------------------------------------------"
         // Build and Test
