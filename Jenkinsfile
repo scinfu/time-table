@@ -15,7 +15,7 @@ node('master') {
         ])
         def commitHash = checkout(scm).GIT_COMMIT
         echo commitHash
-        def commitMessage = checkout(scm).GIT_MESSAGE
+        def commitMessage = checkout(scm).GIT_COMMIT_MESSAGE
         echo commitMessage
         echo "----------------------------------------------------------------------"
         // Build and Test
