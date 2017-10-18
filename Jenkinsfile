@@ -15,6 +15,7 @@ node('master') {
         ])
         //def commitHash = checkout(scm).GIT_COMMIT
         def result = commitMessage()
+        result = sh (script: "git log -1 | grep '\\[Update Jenkinsfile\\]'", returnStatus: true) 
         //def commitMessage = sh 'git log -1 --pretty=%B'
         echo result
         
