@@ -16,7 +16,7 @@ node('master') {
         def commitHash = checkout(scm).GIT_COMMIT
         echo commitHash
         checkout scm
-        def result = sh (script: "git log -1") 
+        def result = commitMessage()
         echo ""+result
         
         echo "----------------------------------------------------------------------"
@@ -43,8 +43,6 @@ def commitSha1() {
 }
 
 def commitMessage() {
-    sh 'git log --format=%B -n 1 HEAD > commitMessage'
-    def commitMessage = readFile('commitMessage')
-    sh 'rm commitMessage'
+    def commitMessage = sh 'git log -1 --pretty=%B'
     commitMessage
 }
