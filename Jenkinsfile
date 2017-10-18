@@ -14,7 +14,7 @@ node('master') {
             ]]
         ])
         //def commitHash = checkout(scm).GIT_COMMIT
-        def result = sh (script: 'git log -1 --pretty=%B') 
+        def result = commitMessage()
         //def commitMessage = sh 'git log -1 --pretty=%B'
         echo result
         
@@ -43,5 +43,5 @@ def commitSha1() {
 
 def commitMessage() {
     def commitMessage = sh 'git log -1 --pretty=%B'
-    commitMessage
+    return commitMessage
 }
