@@ -17,7 +17,7 @@ node('master') {
         echo commitHash
         checkout scm
         def result = sh (script: "git log -1 | grep '\\[ci skip\\]'", returnStatus: true) 
-        echo result
+        echo ""+result
         
         echo "----------------------------------------------------------------------"
         // Build and Test
