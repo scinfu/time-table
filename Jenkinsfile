@@ -14,8 +14,9 @@ node('master') {
             ]]
         ])
         //def commitHash = checkout(scm).GIT_COMMIT
-        def commitMessage = sh 'git log -1 --pretty=%B'
-        echo commitMessage
+        result = sh (script: "git log -1 | grep '\\[ci skip\\]'") 
+        //def commitMessage = sh 'git log -1 --pretty=%B'
+        echo result
         
         echo "----------------------------------------------------------------------"
         // Build and Test
