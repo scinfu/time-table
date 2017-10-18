@@ -16,7 +16,7 @@ node('master') {
         def commitHash = checkout(scm).GIT_COMMIT
         echo commitHash
         checkout scm
-        def result = sh (script: "git log -1 | grep '\\[ci skip\\]'", returnStatus: true) 
+        def result = sh (script: "git log -1") 
         echo ""+result
         
         echo "----------------------------------------------------------------------"
