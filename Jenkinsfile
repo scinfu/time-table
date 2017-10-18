@@ -13,8 +13,8 @@ node('master') {
                 url: 'https://github.com/mmorejon/time-table.git'
             ]]
         ])
-        def commitMessage = commitMessage()
-        echo commitMessage
+        def commitHash = checkout(scm).GIT_COMMIT
+        echo commitHash
         echo "----------------------------------------------------------------------"
         // Build and Test
         sh 'xcodebuild test -scheme TimeTable -destination "platform=iOS Simulator,name=iPhone 7,OS=11.0" -enableCodeCoverage YES'
