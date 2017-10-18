@@ -13,7 +13,9 @@ node('master') {
                 url: 'https://github.com/mmorejon/time-table.git'
             ]]
         ])
-
+        echo "qwerty"
+        echo commitMessage()
+        echo "----------------------------------------------------------------------"
         // Build and Test
         sh 'xcodebuild test -scheme TimeTable -destination "platform=iOS Simulator,name=iPhone 7,OS=11.0" -enableCodeCoverage YES'
     }
@@ -24,28 +26,21 @@ node('master') {
     }*/
 }
 
-node('master2') {
+def version() {
+    def matcher = readFile('pom.xml') =~ '<version>(.+)</version>'
+    matcher ? matcher[0][1] : null
+}
 
-    stage('Checkout/Build/Test') {
+def commitSha1() {
+    sh 'git rev-parse HEAD > commit'
+    def commit = readFile('commit').trim()
+    sh 'rm commit'
+    commit.substring(0, 7)
+}
 
-        // Checkout files.
-        checkout([
-            $class: 'GitSCM',
-            branches: [[name: 'master']],
-            doGenerateSubmoduleConfigurations: false,
-            extensions: [], submoduleCfg: [],
-            userRemoteConfigs: [[
-                name: 'github',
-                url: 'https://github.com/mmorejon/time-table.git'
-            ]]
-        ])
-
-        // Build and Test
-        sh 'xcodebuild test -scheme TimeTable -destination "platform=iOS Simulator,name=iPhone 7,OS=11.0" -enableCodeCoverage YES'
-    }
-/*
-    stage ('Notify') {
-        // Send slack notification
-        slackSend channel: '#my-team', message: 'Time Table - Successfully', teamDomain: 'my-team', token: 'my-token'
-    }*/
+def commitMessage() {
+    sh 'git log --format=%B -n 1 HEAD > commitMessage'
+    def commitMessage = readFile('commitMessage')
+    sh 'rm commitMessage'
+    commitMessage
 }
