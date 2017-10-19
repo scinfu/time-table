@@ -1,6 +1,6 @@
 node('master') {
 
-    stage('Checkout/Build/Test') {
+    stage('Tests') {
 
         // Checkout files.
         checkout([
@@ -13,11 +13,10 @@ node('master') {
                 url: 'https://github.com/mmorejon/time-table.git'
             ]]
         ])
-        //def commitHash = checkout(scm).GIT_COMMIT
-        def result = commitMessage()
-        result = sh (script: "git log -1 | grep '\\[Update Jenkinsfile\\]'", returnStatus: true) 
+        def commitHash = checkout(scm).GIT_COMMIT
+        def commitMessage = sh 'git log -1 --pretty=%B' 
         //def commitMessage = sh 'git log -1 --pretty=%B'
-        echo result
+        echo commitMessage
         
         echo "----------------------------------------------------------------------"
         // Build and Test
