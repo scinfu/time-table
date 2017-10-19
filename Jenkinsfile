@@ -16,10 +16,10 @@ node('master') {
     }
     
     stage('Fabric') {
-        //def commitHash = checkout(scm).GIT_COMMIT
-        //def commitMessage = sh 'git log -1 --pretty=%B'
         def commitMessage = commitMessage()
-        echo "commitMessage=$commitMessage";
+        echo "commitMessage= $commitMessage";
+        
+        
     }
     
     stage('Tests') {
@@ -34,18 +34,6 @@ node('master') {
         // Send slack notification
         slackSend channel: '#my-team', message: 'Time Table - Successfully', teamDomain: 'my-team', token: 'my-token'
     }*/
-}
-
-def version() {
-    def matcher = readFile('pom.xml') =~ '<version>(.+)</version>'
-    matcher ? matcher[0][1] : null
-}
-
-def commitSha1() {
-    sh 'git rev-parse HEAD > commit'
-    def commit = readFile('commit').trim()
-    sh 'rm commit'
-    commit.substring(0, 7)
 }
 
 def commitMessage() {
