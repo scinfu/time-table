@@ -15,12 +15,14 @@ node('master') {
         ])
     }
     
-    /*stage('Fabric') {
-        def commitHash = checkout(scm).GIT_COMMIT
-        def commitMessage = (sh 'git log -1 --pretty=%B') 
+    stage('Fabric') {
+        //def commitHash = checkout(scm).GIT_COMMIT
         //def commitMessage = sh 'git log -1 --pretty=%B'
-        echo commitMessage
-    }*/
+        //def commitMessage = sh 'git log -1 --pretty=%B'
+        sh "git log -1 --pretty=%B > result";
+        def output=readFile('result').trim()
+        echo "output=$output";
+    }
     
     stage('Tests') {
         // Build and Test
