@@ -10,7 +10,7 @@ node('master') {
             extensions: [], submoduleCfg: [],
             userRemoteConfigs: [[
                 name: 'github',
-                url: 'https://github.com/mmorejon/time-table.git'
+                url: 'https://github.com/scinfu/time-table.git'
             ]]
         ])
     }
@@ -18,7 +18,7 @@ node('master') {
     stage('Fabric') {
         //def commitHash = checkout(scm).GIT_COMMIT
         //def commitMessage = sh 'git log -1 --pretty=%B'
-        def commitMessage = sh(returnStdout: true, script: 'git log')
+        def commitMessage = sh(returnStdout: true, script: 'git log-1').trim()
         echo "commitMessage=$commitMessage";
     }
     
