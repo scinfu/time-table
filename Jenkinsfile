@@ -18,7 +18,7 @@ node('master') {
     stage('Fabric') {
         //def commitHash = checkout(scm).GIT_COMMIT
         //def commitMessage = sh 'git log -1 --pretty=%B'
-        def commitMessage = sh(returnStdout: true, script: 'git log -1 --pretty=%B').trim()
+        def commitMessage = commitMessage()
         echo "commitMessage=$commitMessage";
     }
     
@@ -49,6 +49,5 @@ def commitSha1() {
 }
 
 def commitMessage() {
-    def commitMessage = sh 'git log -1 --pretty=%B'
-    return commitMessage
+    sh(returnStdout: true, script: 'git log -1 --pretty=%B').trim()
 }
