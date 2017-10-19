@@ -18,12 +18,8 @@ node('master') {
     stage('Fabric') {
         //def commitHash = checkout(scm).GIT_COMMIT
         //def commitMessage = sh 'git log -1 --pretty=%B'
-        def commitMessage = sh(returnStdout: true, script: 'git log -1 --pretty=%B')
+        def commitMessage = sh(returnStdout: true, script: 'git log -1')
         echo "commitMessage=$commitMessage";
-        
-        sh "git log -1 --pretty=%B > result";
-        def output=readFile('result').trim()
-        echo "output=$output";
     }
     
     stage('Tests') {
