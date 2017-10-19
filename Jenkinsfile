@@ -1,6 +1,6 @@
 node('master') {
 
-    stage('Tests') {
+    stage('Checkout') {
 
         // Checkout files.
         checkout([
@@ -13,15 +13,22 @@ node('master') {
                 url: 'https://github.com/mmorejon/time-table.git'
             ]]
         ])
+    }
+    
+    stage('Fabric') {
         def commitHash = checkout(scm).GIT_COMMIT
         def commitMessage = (sh 'git log -1 --pretty=%B') 
         //def commitMessage = sh 'git log -1 --pretty=%B'
         echo commitMessage
-        
-        echo "----------------------------------------------------------------------"
+    }
+    
+    stage('Tests') {
         // Build and Test
         sh 'xcodebuild test -scheme TimeTable -destination "platform=iOS Simulator,name=iPhone 7,OS=11.0" -enableCodeCoverage YES'
     }
+    
+    
+    
 /*
     stage ('Notify') {
         // Send slack notification
