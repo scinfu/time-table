@@ -18,17 +18,12 @@ node('master') {
     stage('Fabric') {
         def commitMessage = commitMessage()
         echo "commitMessage= $commitMessage";
-        
-        
     }
     
     stage('Tests') {
         // Build and Test
         sh 'xcodebuild test -scheme TimeTable -destination "platform=iOS Simulator,name=iPhone 7,OS=11.0" -enableCodeCoverage YES'
     }
-    
-    
-    
 /*
     stage ('Notify') {
         // Send slack notification
