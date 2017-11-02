@@ -1,4 +1,6 @@
-pipeline {
+node {
+    checkout scm 
+    pipeline {
     agent any
     stages {
         stage('Test') {
@@ -8,3 +10,6 @@ pipeline {
         }
     }
 }
+}
+
+
